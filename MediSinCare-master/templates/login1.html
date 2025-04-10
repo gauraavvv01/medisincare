@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login1.css') }}" />
+    <title>Register</title>
+  </head>
+
+  <body>
+    <div class="container" id="container">
+      <div class="form-container sign-up">
+        <form id="sign-up-form">
+          <h1 style="font-family: 'Comfortaa', serif;">Create Account</h1>
+          <input style="font-family: 'Kumbh Sans', serif;" type="text" id="sign-up-name" placeholder="Name" required />
+          <input style="font-family: 'Kumbh Sans', serif;" type="email" id="sign-up-email" placeholder="Email" required />
+          <input
+            style="font-family: 'Kumbh Sans', serif;"
+            type="password"
+            id="sign-up-password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit" style="font-family: 'Comfortaa', serif;">Sign Up</button>
+        </form>
+      </div>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Elsie+Swash+Caps:wght@400;900&family=Metal&display=swap" rel="stylesheet">
+        <title>Custom Font Example</title>
+      </head>
+      <div class="form-container sign-in">
+        <form id="sign-in-form" action="/" method="POST">
+          <h1 style="font-family: 'Comfortaa', serif;">Sign In</h1>
+          <div class="social-icons">
+            <a href="#" class="icon" id="google-sign-in"
+              ><i class="fa-brands fa-google-plus-g"></i
+            ></a>
+          </div>
+          <span style="font-family: 'Kumbh Sans', serif;">or use your email password</span>
+          <input style="font-family: 'Kumbh Sans', serif;" type="email" id="sign-in-email" placeholder="Email" required />
+          <input
+            style="font-family: 'Kumbh Sans', serif;"
+            type="password"
+            id="sign-in-password"
+            placeholder="Password"
+            required
+          />
+          <head>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Monomakh&display=swap" rel="stylesheet">
+          </head>
+          <a href="#" id="forgot-password-link" style="font-family: 'Kumbh Sans', serif;">Forgot Your Password?</a>
+
+          <button type="submit" style="font-family: 'Comfortaa', serif;">Sign In</button>
+        </form>
+      </div>
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <h1 style="font-family: 'Kurale', serif; ">Welcome Back!</h1>
+            <p style="font-family: 'Kumbh Sans', serif; ">Good to see you! Log in and stay well!</p>
+            <button class="hidden" id="login">Sign In</button>
+          </div>
+          <head>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Kurale&display=swap" rel="stylesheet">
+        </head>
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+        </head>
+          <div class="toggle-panel toggle-right">
+            <h1 style="font-family: 'Kurale', serif; color: #082d29;">MediSinCare</h1>
+            <p style="font-family: 'Kumbh Sans', serif; color: rgb(57, 33, 4);">
+              New here? Let’s get you started on better health!
+            </p>
+            <button class="hidden" id="register" style="font-family: 'Comfortaa', serif;">Sign Up</button>
+          </div>
+        </div>
+        <div id="forgotPasswordModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 style="font-family: 'Comfortaa', serif;">Reset Password</h2>
+            <form id="forgot-password-form">
+              <input
+                type="email"
+                id="reset-email"
+                placeholder="Enter your email"
+                required
+              />
+              <button type="submit" style="font-family: 'Kumbh Sans', serif;">Reset Password</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      // Function to fetch Firebase config from Flask
+      async function fetchFirebaseConfig() {
+        try {
+          const response = await fetch('/firebase-config'); // Flask route to provide config
+          const config = await response.json();
+          return config;
+        } catch (error) {
+          console.error('Error fetching Firebase config:', error);
+          alert('Failed to load Firebase config. Please try again.');
+        }
+      }
+    
+      // Initialize Firebase dynamically
+      async function initializeFirebase() {
+        const firebaseConfig = await fetchFirebaseConfig();
+        if (!firebaseConfig) return; // Stop execution if config is missing
+    
+        import("https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js").then(({ initializeApp }) => {
+          const app = initializeApp(firebaseConfig);
+          
+          import("https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js").then(async ({ 
+            getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, 
+            GoogleAuthProvider, signInWithPopup, updateProfile, sendPasswordResetEmail 
+          }) => {
+            const auth = getAuth(app);
+            const googleProvider = new GoogleAuthProvider();
+    
+            const container = document.getElementById('container');
+            const registerBtn = document.getElementById('register');
+            const loginBtn = document.getElementById('login');
+    
+            registerBtn.addEventListener('click', () => container.classList.add('active'));
+            loginBtn.addEventListener('click', () => container.classList.remove('active'));
+    
+            // Sign Up Function
+            document.getElementById('sign-up-form').addEventListener('submit', async event => {
+              event.preventDefault();
+              const name = document.getElementById('sign-up-name').value;
+              const email = document.getElementById('sign-up-email').value;
+              const password = document.getElementById('sign-up-password').value;
+    
+              try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                if (userCredential && userCredential.user) {
+                  await updateProfile(userCredential.user, { displayName: name });
+                  alert("User registered successfully!");
+                }
+              } catch (error) {
+                alert('Error: ' + error.message);
+              }
+            });
+    
+            // Sign In Function
+            document.getElementById('sign-in-form').addEventListener('submit', async event => {
+              event.preventDefault();
+              const email = document.getElementById('sign-in-email').value;
+              const password = document.getElementById('sign-in-password').value;
+    
+              try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                sessionStorage.setItem("loggedIn", "true");
+    
+                await fetch('/', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ uid: userCredential.user.uid })
+                });
+    
+                window.location.href = "{{ url_for('main') }}";
+              } catch (error) {
+                alert('Error: ' + error.message);
+              }
+            });
+    
+            // Google Sign-In
+            document.getElementById('google-sign-in').addEventListener('click', async event => {
+              event.preventDefault();
+              try {
+                const result = await signInWithPopup(auth, googleProvider);
+                sessionStorage.setItem("loggedIn", "true");
+    
+                await fetch('/', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ uid: result.user.uid })
+                });
+    
+                window.location.href = "{{ url_for('main') }}";
+              } catch (error) {
+                alert('Error: ' + error.message);
+              }
+            });
+    
+            // Forgot Password
+            const modal = document.getElementById('forgotPasswordModal');
+            const forgotPasswordLink = document.getElementById('forgot-password-link');
+            const span = document.getElementsByClassName('close')[0];
+    
+            forgotPasswordLink.onclick = e => { e.preventDefault(); modal.style.display = 'block'; };
+            span.onclick = () => modal.style.display = 'none';
+            window.onclick = event => { if (event.target == modal) modal.style.display = 'none'; };
+    
+            document.getElementById('forgot-password-form').addEventListener('submit', async event => {
+              event.preventDefault();
+              const email = document.getElementById('reset-email').value;
+    
+              try {
+                await sendPasswordResetEmail(auth, email);
+                alert('Password reset email sent! Please check your inbox.');
+                modal.style.display = 'none';
+              } catch (error) {
+                alert('Error: ' + error.message);
+              }
+            });
+    
+          });
+        });
+      }
+    
+      // Execute Firebase initialization
+      initializeFirebase();
+    </script>
+  </body>
+</html>

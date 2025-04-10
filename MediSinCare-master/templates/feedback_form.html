@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provide Feedback</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #b2dbba;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+        }
+
+        .review-form-container {
+            background: #bab588;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px #000000;
+            width: 100%;
+            max-width: 600px;
+            padding: 35px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .review-form-container h2 {
+            text-align: center;
+            color: #185c54;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #eee7bf;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: none;
+            height: 120px;
+        }
+
+        button {
+            background: #185c54;
+            color: #ecd985;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #a4a539;
+            color: #000000;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .rating span {
+            font-size: 30px;
+            color: #e8d78a;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        .rating span.selected,
+        .rating span.hover {
+            color: #924414;
+        }
+
+        .thumbs {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .thumbs div {
+            text-align: center;
+        }
+
+        .thumbs label {
+            font-size: 50px;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .thumbs input {
+            display: none;
+        }
+
+        .thumbs input:checked + label {
+            color: #28a745;
+            transform: scale(1.2);
+        }
+
+        .thumbs input#thumbsDown:checked + label {
+            color: #dc3545;
+        }
+
+        .thumbs span {
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            margin-top: 5px;
+            font-size: 14px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Elsie+Swash+Caps:wght@400;900&family=Metal&display=swap" rel="stylesheet">
+        <title>Custom Font Example</title>
+    </head>   
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kurale&display=swap" rel="stylesheet">
+    </head>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+    </head>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Elsie+Swash+Caps:wght@400;900&family=Metal&display=swap" rel="stylesheet">
+        <title>Custom Font Example</title>
+    </head>
+    <div class="review-form-container">
+        <h2 style="font-family: 'Kurale', serif; font-size: 2.0rem;">MediSinCare</h2>
+        <p style="text-align: center; color: #150202; font-family: 'Kumbh Sans', serif; ">Your feedback helps us improve our service. 😊</p>
+        <form id="feedbackForm" action="/feedback" method="POST">
+            <!-- Name -->
+            <label for="name" style="font-family: 'Comfortaa', serif; font-size: 1.1rem; color: #06423b;">Full Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required  style="background-color: #e9ecd7; font-family: 'Kumbh Sans', serif;">
+
+            <!-- Email -->
+            <label for="email" style="font-family: 'Comfortaa', serif; font-size: 1.1rem; color: #06423b;">Email Address:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required style="background-color: #e9ecd7; font-family: 'Kumbh Sans', serif;"">
+
+            <!-- Review Rating -->
+            <label for="rating" style="font-family: 'Comfortaa', serif; font-size: 1.1rem; color: #06423b;">Rate Our Service:</label>
+            <div class="rating" id="rating">
+                <span data-value="1">&#9733;</span>
+                <span data-value="2">&#9733;</span>
+                <span data-value="3">&#9733;</span>
+                <span data-value="4">&#9733;</span>
+                <span data-value="5">&#9733;</span>
+            </div>
+            <input type="hidden" id="ratingInput" name="rating" required>
+
+            <!-- Recommendation Section -->
+            <label style="font-family: 'Comfortaa', serif; font-size: 1.1rem; color: #06423b;">Would you recommend MediSinCare to a friend?</label>
+            <div class="thumbs">
+                <div>
+                    <input type="radio" id="thumbsUp" name="recommend" value="Yes" required>
+                    <label for="thumbsUp">&#128077;</label>
+                    <span style="font-family: 'Comfortaa', serif; color: #000000;">Yes</span>
+                </div>
+                <div>
+                    <input type="radio" id="thumbsDown" name="recommend" value="No">
+                    <label for="thumbsDown">&#128078;</label>
+                    <span style="font-family: 'Comfortaa', serif; color: #000000;">No</span>
+                </div>
+            </div>
+
+            <!-- Comments -->
+            <label for="comments" style="font-family: 'Comfortaa', serif; font-size: 1.1rem; color: #06423b;">Your Feedback:</label>
+            <textarea id="comments" name="comments" placeholder="Write about your experience..."  style="background-color: #e9ecd7; font-family: 'Kumbh Sans', serif;"></textarea>
+
+            <!-- Submit Button -->
+            <button type="submit" style="font-family: 'Comfortaa', serif;">Submit Your Feedback</button>
+        </form>
+    </div>
+
+    <script>
+        const stars = document.querySelectorAll('.rating span');
+        const ratingInput = document.getElementById('ratingInput');
+
+        stars.forEach((star, index) => {
+            // Highlight on hover
+            star.addEventListener('mouseover', () => {
+                stars.forEach((s, i) => {
+                    s.classList.toggle('hover', i <= index);
+                });
+            });
+
+            // Reset hover on mouseout
+            star.addEventListener('mouseout', () => {
+                stars.forEach(s => s.classList.remove('hover'));
+            });
+
+            // Select rating on click
+            star.addEventListener('click', () => {
+                const selectedRating = index + 1;
+                ratingInput.value = selectedRating;
+                stars.forEach((s, i) => {
+                    s.classList.toggle('selected', i < selectedRating);
+                });
+            });
+        });
+
+        // Ensure form submission is blocked if no rating is selected
+        document.querySelector("form").addEventListener("submit", function (event) {
+            if (!ratingInput.value) {
+                alert("Please select a rating before submitting.");
+                event.preventDefault();
+            }
+        });
+        document.getElementById("feedbackForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default submission
+            
+            // Simple thank you alert
+            alert("Thank you for submitting your feedback!");
+            
+            // Optionally, submit the form after showing the alert
+            this.submit();
+        });
+    </script>
+</body>
+</html>

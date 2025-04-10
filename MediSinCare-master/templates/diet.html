@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dietary Advices</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e3fdfd, #8ea77d);
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    h1 {
+      color: #00796B;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Dropdown Styles */
+    .dropdown-container {
+      margin: 20px auto;
+      width: 50%;
+      max-width: 400px;
+    }
+
+    .dropdown {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #00796B;
+      border-radius: 10px;
+      font-size: 16px;
+      background-color: #ffffff;
+      color: #00796B;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2300796B' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .dropdown:focus {
+      outline: none;
+      border-color: #004d40;
+      box-shadow: 0 4px 8px rgba(0, 77, 64, 0.2);
+    }
+
+    /* Common Diseases Section */
+    .common-diseases-section {
+      margin: 10px auto;
+      padding: 5px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      transition: opacity 0.3s ease;
+    }
+
+    .common-diseases-section h2 {
+      color: #004d40;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    /* Disease Container */
+    .disease-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    /* Disease Card Styles */
+    .disease-card {
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 20px;
+      width: 280px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: none; /* Hide all cards by default */
+    }
+
+    .disease-card.common {
+      display: block; /* Show only common diseases initially */
+    }
+
+    .disease-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .disease-title {
+      font-size: 1.5rem;
+      color: #00796B;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .tab-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 15px;
+    }
+
+    .tab {
+      padding: 8px 15px;
+      background: #00796B;
+      color: #fff;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s ease, transform 0.2s ease;
+      text-decoration: none;
+    }
+
+    .tab:hover {
+      background: #004d40;
+      transform: scale(1.05);
+    }
+
+    /* Footer Styles */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      font-size: 12px;
+      color: #555;
+      padding: 6px;
+      background: rgba(255, 255, 255, 0.9);
+      border-top: 2px solid #00796B;
+      box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .dropdown-container {
+        width: 80%;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .disease-card {
+        width: 100%;
+      }
+    }
+    .black-box {
+      background-color: #cec996;
+      padding: 10px 15px;
+      display: inline-block;
+      border-radius: 5px;
+      text-align: left;
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      z-index: 1000;
+    }
+
+    .black-box a {
+      color: rgb(0, 0, 0);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .black-box:hover {
+      background-color: #c2e398;
+    }
+  </style>
+</head>
+<body>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+  </head>   
+  <head>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Kurale&display=swap" rel="stylesheet">
+  </head>
+  
+  <head>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Elsie+Swash+Caps:wght@400;900&family=Metal&display=swap" rel="stylesheet">
+      <title>Custom Font Example</title>
+  </head>
+  <h1 style="font-family: 'Comfortaa', serif; margin-top: 7px;">Disease Remedies & Care</h1>
+
+  <!-- Dropdown for Diseases -->
+  <div class="dropdown-container">
+    <select class="dropdown" onchange="filterDisease(this.value)" style="font-family: 'Kumbh Sans', serif;">
+      <option value="">Select a Disease</option>
+      <option value="Acne">Acne</option>
+      <option value="Allergy">Allergy</option>
+      <option value="Arthritis">Arthritis</option>
+      <option value="Bronchial Asthma">Bronchial Asthma</option>
+      <option value="Cervical Spondylosis">Cervical Spondylosis</option>
+      <option value="Chicken Pox">Chicken Pox</option>
+      <option value="Chronic Cholestasis">Chronic Cholestasis</option>
+      <option value="Common Cold">Common Cold</option>
+      <option value="Dengue">Dengue</option>
+      <option value="Diabetes">Diabetes</option>
+      <option value="Drug Reaction">Drug Reaction</option>
+      <option value="Fungal Infection">Fungal Infection</option>
+      <option value="Gastroenteritis">Gastroenteritis</option>
+      <option value="GERD">GERD</option>
+      <option value="Heart Attack">Heart Attack</option>
+      <option value="Hepatitis A">Hepatitis A</option>
+      <option value="Hepatitis B">Hepatitis B</option>
+      <option value="Hepatitis C">Hepatitis C</option>
+      <option value="Hepatitis D">Hepatitis D</option>
+      <option value="Hepatitis E">Hepatitis E</option>
+      <option value="Hypertension">Hypertension</option>
+      <option value="Hyperthyroidism">Hyperthyroidism</option>
+      <option value="Hypoglycemia">Hypoglycemia</option>
+      <option value="Hypothyroidism">Hypothyroidism</option>
+      <option value="Impetigo">Impetigo</option>
+      <option value="Malaria">Malaria</option>
+      <option value="Migraines">Migraines</option>
+      <option value="Osteoarthritis">Osteoarthritis</option>
+      <option value="Paralysis (Brain Hemorrhage)">Paralysis (Brain Hemorrhage)</option>
+      <option value="Peptic Ulcer Disease">Peptic Ulcer Disease</option>
+      <option value="Piles">Piles</option>
+      <option value="Pneumonia">Pneumonia</option>
+      <option value="Tuberculosis">Tuberculosis</option>
+      <option value="Typhoid">Typhoid</option>
+      <option value="UTI">UTI</option>
+      <option value="Varicose Veins">Varicose Veins</option>      
+    </select>
+  </div>
+
+  <!-- Common Diseases Section -->
+  <div class="common-diseases-section" id="commonDiseasesSection">
+    <h2 style="font-family: 'Comfortaa', serif;">Common Diseases</h2>
+    <p style="font-family: 'Kumbh', serif;">Here are some common diseases and their remedies:</p>
+  </div>
+
+  <div class="disease-container" style="font-family: 'Comfortaa', serif;">
+    <!-- Common Disease Cards -->
+    <div class="disease-card" data-disease="Heart Attack">
+      <div class="disease-title">Heart Attack</div>
+      <div class="tab-container" style="font-family: 'Kurale', serif;">
+        <a class="tab" href="https://www.youtube.com/watch?v=OIp0ZNLZPKI" target="_blank">Remedy</a>
+        <a class="tab" href="https://www.lybrate.com/topic/cardiac-diet-chart" target="_blank">Diet Plan</a>
+        <a class="tab" href="https://heritagehospitals.com/blog/yoga-for-heart-health" target="_blank">Exercise</a>
+      </div>
+    </div>
+
+    <div class="disease-card common" data-disease="Diabetes">
+      <div class="disease-title" style="font-family: 'Comfortaa', serif;">Diabetes</div>
+      <div class="tab-container"style="font-family: 'Kurale', serif;">
+        <a class="tab" href="https://ayurved.dpu.edu.in/blogs/effective-home-remedies-diabetes-management" target="_blank">Remedy</a>
+        <a class="tab" href="https://asianheartinstitute.org/blog/diet-chart-for-diabetic-patient-in-india/" target="_blank">Diet Plan</a>
+        <a class="tab" href="https://www.healthline.com/health/diabetes/yoga-for-diabetes" target="_blank">Exercise</a>
+      </div>
+    </div>
+
+    <div class="disease-card common" data-disease="Hypertension">
+      <div class="disease-title">Hypertension</div>
+      <div class="tab-container" style="font-family: 'Kurale', serif;">
+        <a class="tab" href="https://timesofindia.indiatimes.com/life-style/food-news/effective-home-remedies-for-high-blood-pressure/photostory/78873842.cms" target="_blank">Remedy</a>
+        <a class="tab" href="https://www.lybrate.com/topic/high-blood-pressure-diet-chart" target="_blank">Diet Plan</a>
+        <a class="tab" href="https://youtu.be/NDp_jRfVA5k?feature=shared" target="_blank">Exercise</a>
+      </div>
+    </div>
+
+    <div class="disease-card common" data-disease="Common Cold">
+      <div class="disease-title">Common Cold</div>
+      <div class="tab-container" style="font-family: 'Kurale', serif;">
+        <a class="tab" href="https://www.webmd.com/cold-and-flu/14-tips-prevent-colds-flu-1" target="_blank">Remedy</a>
+        <a class="tab" href="https://www.youtube.com/watch?v=wyOIDoh14pk" target="_blank">Diet Plan</a>
+        <a class="tab" href="https://m.economictimes.com/news/india/five-yoga-asanas-to-prevent-cold/flu-season/slideshow/105416841.cms" target="_blank">Exercise</a>
+      </div>
+    </div>
+
+    <!-- Non-Common Disease Cards -->
+      
+      <div class="disease-card" data-disease="Varicose Veins">
+        <div class="disease-title">Varicose Veins</div>
+        <div class="tab-container" style="font-family: 'Kurale', serif;">
+          <a class="tab" href="https://www.carehospitals.com/blog-detail/home-remedies-for-varicose-veins" target="_blank">Remedy</a>
+          <a class="tab" href="https://fitelo.co/diet/diet-plan-for-varicose-veins/" target="_blank">Diet Plan</a>
+          <a class="tab" href="https://www.pristyncare.com/blog/exercises-for-varicose-veins" target="_blank">Exercise</a>
+        </div>
+      </div>
+      
+      <div class="disease-card" data-disease="Hypoglycemia">
+        <div class="disease-title">Hypoglycemia</div>
+        <div class="tab-container" style="font-family: 'Kurale', serif;">
+          <a class="tab" href="https://www.mayoclinic.org/diseases-conditions/hypoglycemia/symptoms-causes/syc-20373685" target="_blank">Remedy</a>
+          <a class="tab" href="https://www.lybrate.com/topic/hypoglycemia-diet" target="_blank">Diet Plan</a>
+          <a class="tab" href="https://www.healthline.com/health/diabetes/yoga-for-diabetes" target="_blank">Exercise</a>
+        </div>
+      </div>
+      <div class="disease-card" data-disease="Impetigo">
+        <div class="disease-title">Impetigo</div>
+        <div class="tab-container" style="font-family: 'Kurale', serif;">
+          <a class="tab" href="https://www.healthline.com/health/home-remedies-for-impetigo" target="_blank">Remedy</a>
+          <a class="tab" href="https://www.drugs.com/cg/low-bacteria-diet.html" target="_blank">Diet Plan</a>
+          <a class="tab" href="https://diahome.com/top-yoga-poses-for-diabetes" target="_blank">Exercise</a>
+        </div>
+      </div>
+      <div class="disease-card" data-disease="Typhoid">
+        <div class="disease-title">Typhoid</div>
+        <div class="tab-container" style="font-family: 'Kurale', serif;">
+          <a class="tab" href="https://www.carehospitals.com/indore/blog-detail/typhoid-prevention" target="_blank">Remedy</a>
+          <a class="tab" href="https://bansalhospital.com/diet-for-typhoid-fever/" target="_blank">Diet Plan</a>
+          <a class="tab" href="https://www.amarujala.com/photo-gallery/lifestyle/health/diet-to-prevent-typhoid" target="_blank">Exercise</a>
+        </div>
+      </div>
+      <div class="disease-card" data-disease="Malaria">
+        <div class="disease-title">Malaria</div>
+        <div class="tab-container" style="font-family: 'Kurale', serif;">
+          <a class="tab" href="https://www.youtube.com/watch?v=AkZfJjhKqKQ" target="_blank">Remedy</a>
+          <a class="tab" href="https://www.lalpathlabs.com/blog/what-to-eat-and-avoid-in-malaria/" target="_blank">Diet Plan</a>
+          <a class="tab" href="https://www.hindustantimes.com/lifestyle/health/5-yoga-exercise-tips-to-speed-up-your-recovery-from-malaria-101651231735023.html" target="_blank">Exercise</a>
+        </div>
+      </div>
+      <div class="disease-card common" data-disease="Dengue">
+        <div class="disease-title">Dengue</div">
+        <div class="tab-container" style="font-family: 'Kurale', serif;">
+          <a class="tab" href="https://health-e.in/blog/home-remedies-for-dengue/" target="_blank">Remedy</a>
+          <a class="tab" href="https://www.lybrate.com/topic/diet-for-dengue" target="_blank">Diet Plan</a>
+          <a class="tab" href="https://www.hindustantimes.com/lifestyle/health/suffering-from-dengue-try-these-yoga-tips-and-asanas-for-quick-recovery-101637754449706.html" target="_blank">Exercise</a>
+        </div>
+      </div>
+    </div>
+    <div class="disease-card" data-disease="Chicken Pox">
+      <div class="disease-title">Chicken Pox</div>
+      <div class="tab-container" style="font-family: 'Kurale', serif;">
+        <a class="tab" href="https://www.apollopharmacy.in/blog/article/chickenpox-symptoms-home-remedies" target="_blank">Remedy</a>
+        <a class="tab" href="https://www.lybrate.com/topic/chicken-pox-diet" target="_blank">Diet Plan</a>
+        <a class="tab" href="https://ayurvedapc.blog/2021/11/03/chickenpox-ayurvedic-treatment-diet-exercises-yoga-pranayama/" target="_blank">Exercise</a>
+      </div>
+    </div>
+    <div class="disease-card" data-disease="Acne">
+      <div class="disease-title">Acne</div">
+      <div class="tab-container" style="font-family: 'Kurale', serif;">
+        <a class="tab" href="https://www.youtube.com/watch?v=BAqsl50pSVM" target="_blank"> Remedy</a>
+        <a class="tab" href="https://www.medicalnewstoday.com/articles/322639" target="_blank">Diet Plan</a>
+        <a class="tab" href="https://www.youtube.com/watch?v=VQkAT9Nc_vM" target="_blank">Exercise</a>
+      </div>
+      </div>
+    </div>
+      <div class="disease-card" data-disease="Hypothyroidism">
+          <div class="disease-title">Hypothyroidism</div">
+              <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.youtube.com/watch?v=Bw4kqWEDZd4" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.lybrate.com/topic/thyroid-diet-chart" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.healthline.com/health/yoga-for-thyroid" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Hepatitis A">
+              <div class="disease-title">Hepatitis A</div">
+              <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://draxe.com/health/hepatitis-a/#Conventional_Treatment" target="_blank"> Remedy</a>
+              <a class="tab" href="https://fitelo.co/diet/hepatitis-diet-plan/?" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://redcliffelabs.com/myhealth/yoga/11-yoga-asanas-for-liver-and-kidney-health/" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Hepatitis B">
+              <div class="disease-title">Hepatitis B</div">
+              <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://youtube.com/shorts/niII8nGyUxg?feature=shared" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.medicalnewstoday.com/articles/diet-for-hepatitis-b#Example-diet-plan-for-hepatitis-B" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://redcliffelabs.com/myhealth/yoga/11-yoga-asanas-for-liver-and-kidney-health/" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Hepatitis C">
+              <div class="disease-title">Hepatitis C</div">
+              <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://youtube.com/shorts/niII8nGyUxg?feature=shared" target="_blank"> Remedy</a>
+              <a class="tab" href="https://fitelo.co/diet/hepatitis-diet-plan/?" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://redcliffelabs.com/myhealth/yoga/11-yoga-asanas-for-liver-and-kidney-health/" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Hepatitis D">
+              <div class="disease-title">Hepatitis D</div">
+              <div class="tab-container"style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://youtube.com/shorts/niII8nGyUxg?feature=shared" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.planetayurveda.com/library/diet-plan-for-patients-of-hepatitis/?" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://redcliffelabs.com/myhealth/yoga/11-yoga-asanas-for-liver-and-kidney-health/" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Hepatitis E">
+              <div class="disease-title">Hepatitis E</div">
+              <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://youtube.com/shorts/niII8nGyUxg?feature=shared" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.planetayurveda.com/library/diet-plan-for-patients-of-hepatitis/?" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://redcliffelabs.com/myhealth/yoga/11-yoga-asanas-for-liver-and-kidney-health/" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Tuberculosis">
+              <div class="disease-title">Tuberculosis</div">
+              <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.adityabirlacapital.com/healthinsurance/active-together/2021/03/22/what-are-the-7-home-remedies-best-suited-for-tb-patients/#7-home-remedies-for-TB-patients" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.lybrate.com/topic/diet-for-tuberculosis" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://youtu.be/--sdt2bQyV4?feature=shared" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Pneumonia">
+              <div class="disease-title">Pneumonia</div">
+              <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.h-h-c.com/top-10-home-remedies-for-pneumonia-symptoms/" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.lybrate.com/topic/diet-for-pneumonia" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://youtu.be/FuFZqqYd0zk?feature=shared" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Piles">
+              <div class="disease-title">Piles</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://matoshreehospitalkamothe.com/home-remedies-for-piles.php#:~:text=Apply%20an%20ice%20pack%20to,to%20as%20a%20Sitz%20Bath." target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.lybrate.com/topic/piles-diet-chart" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://youtu.be/2Lc8itItXl4?feature=shared" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          
+          <div class="disease-card" data-disease="Migraines">
+              <div class="disease-title">Migraines</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://youtu.be/bLUFYoKBi7o?feature=shared" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.migrainedisorders.org/wp-content/uploads/2019/09/2-15a-Food-menu-and-shopping-lists.pdf" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.excedrin.com/you-plus-excedrin/health-fitness/yoga-poses-for-headaches/" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+    
+          <div class="disease-card" data-disease="Gastroenteritis">
+              <div class="disease-title">Gastroenteritis</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.manipalcigna.com/wellness/wellness-bites/family-health/gastroenteritis-and-its-home-remedies" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.bonheurmd.com/gastroenteritis-diet/" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://youtu.be/IvAx7q2LKqk?feature=shared" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card common" data-disease="UTI">
+              <div class="disease-title">UTI</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.healthline.com/health/uti-home-remedies" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.lybrate.com/topic/uti-diet" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.tummee.com/yoga-sequences/yoga-for-urinary-incontinence" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Arthritis">
+              <div class="disease-title">Arthritis</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://youtu.be/I_Xr2nMOI0M?feature=shared" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.lybrate.com/topic/arthritis-diet" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.arthritis.org/health-wellness/healthy-living/physical-activity/yoga/arthritis-friendly-yoga" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+      
+          <div class="disease-card" data-disease="Bronchial Asthma">
+              <div class="disease-title">Bronchial Asthma</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.1mg.com/articles/7-home-remedies-to-relieve-asthma-symptoms/?srsltid=AfmBOopk0x-EljwpheqWvVMmJOFnC3d71ViEdvLPaDiVFzgSRd3TnPLr" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.lybrate.com/topic/asthma-diet-chart" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.everydayhealth.com/asthma-pictures/great-yoga-poses-for-asthma-relief.aspx" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Cervical Spondylosis">
+              <div class="disease-title">Cervical Spondylosis</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.keralaayurveda.biz/blog/ayurveda-for-cervical-spondylosis#CervicalS_5" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.chandigarhayurvedcentre.com/blog/diet-plan-for-cervical-spondylitis-patients/?srsltid=AfmBOor4pgcv9I_2Egt9wj_DxXU7b1QyR-4pIG0U-z_KbYJBC46Cbz3D" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://timesofindia.indiatimes.com/life-style/health-fitness/fitness/top-10-effective-yoga-poses-for-cervical-spondylosis/photostory/97094070.cms" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Paralysis (Brain haemorrhage)">
+              <div class="disease-title">Paralysis (Brain haemorrhage)</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://saisanjivani.com/blogs/best-5-ayurvedic-herbs-for-paralysis-treatment/" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.planetayurveda.com/library/diet-plan-for-paralysis/?srsltid=AfmBOooz7EvMhhRrtsv5cMoE-6DEr7vMnydfLxwPatkTHMIG0URR9cqI" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.flintrehab.com/yoga-poses-for-brain-injury/" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Hyperthyroidism">
+              <div class="disease-title">Hyperthyroidism</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://drruscio.com/natural-remedies-for-hyperthyroidism/" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.healthline.com/health/hyperthyroidism-diet" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.artofliving.org/us-en/yoga/benefits/yoga-for-hyperthyroidism" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Osteoarthritis">
+              <div class="disease-title">Osteoarthritis</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://adyantayurveda.com/ayurvedic-treatment-for-osteoarthritis/" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.lybrate.com/topic/osteoarthritis-diet" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.healthline.com/health/best-yoga-poses-osteoarthritis" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Fungal Infection">
+              <div class="disease-title">Fungal Infection</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.truemeds.in/blog/home-remedies-for-fungal-infection" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.homeocareclinic.in/diet-chart-for-fungal-infection/" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.myupchar.com/en/disease/fungal-infections/yoga" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Allergy">
+              <div class="disease-title" style="font-family: 'Comfortaa', serif;">Allergy</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;"> 
+              <a class="tab" href="https://www.healthline.com/health/home-remedies-for-allergies" target="_blank"> Remedy</a>
+              <a class="tab" href="https://avedaayur.com/diet-chart-for-allergy/" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.flonase.com/amp/yoga-positions-for-allergies.html" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Drug Reaction">
+              <div class="disease-title">Drug Reaction</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.careinsurance.com/blog/health-insurance-articles/what-are-the-natural-remedies-to-cure-allergies" target="_blank"> Remedy</a>
+              <a class="tab" href="https://avedaayur.com/diet-chart-for-allergy/" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.youtube.com/watch?pp=ygUJI21pbmRldG94&v=gkdI2hxVa3c" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Peptic Ulcer Disease">
+              <div class="disease-title">Peptic Ulcer Disease</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.medicalnewstoday.com/articles/322740#home-remedies" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.lybrate.com/topic/peptic-ulcer-diet" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://www.lybrate.com/topic/yoga-for-ulcer" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="GERD">
+              <div class="disease-title">GERD</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://www.youtube.com/watch?v=gIhXjXSN35c&pp=ygUWaG9tZSByZW1lZGllcyBmb3IgR0VSRA%3D%3D" target="_blank"> Remedy</a>
+              <a class="tab" href="https://www.lybrate.com/topic/gerd-diet-chart" target="_blank">Diet Plan</a>
+              <a class="tab" href="hhttps://www.shvasa.com/yoga-blog/yoga-for-acid-reflux#:~:text=Acid%20reflux%2C%20also%20known%20as,levels%2C%20a%20major%20contributing%20factor" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+          <div class="disease-card" data-disease="Chronic cholestasis">
+              <div class="disease-title">Chronic cholestasis</div">
+                <div class="tab-container" style="font-family: 'Kurale', serif;">
+              <a class="tab" href="https://my.clevelandclinic.org/health/symptoms/23355-gallbladder-pain#care-and-treatment" target="_blank"> Remedy</a>
+              <a class="tab" href="https://aashlokhospital.com/blog/7-day-gallbladder-diet-menu-benefits/" target="_blank">Diet Plan</a>
+              <a class="tab" href="https://redcliffelabs.com/myhealth/yoga/11-yoga-asanas-for-liver-and-kidney-health/?utm_source=chatgpt.com" target="_blank">Exercise</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+  <div class="footer">
+    <p style="font-size: 1.0rem; font-family: 'Kumbh', serif; "><b style="color: #6b0000; font-size: 1.0rem; font-family: 'Kumbh', serif; ">Disclaimer: MediSinCare suggests possible diseases and remedies but is not a substitute for medical diagnosis or treatment. Consult a healthcare professional for proper care.</b></p>
+  </div>
+
+  <script>
+    function filterDisease(selectedDisease) {
+      const cards = document.querySelectorAll('.disease-card');
+      const commonDiseasesSection = document.getElementById('commonDiseasesSection');
+
+      if (selectedDisease === "") {
+        // Show only common diseases when no disease is selected
+        commonDiseasesSection.style.display = "block";
+        cards.forEach(card => {
+          if (card.classList.contains('common')) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      } else {
+        // Hide the common diseases section and show only the selected disease card
+        commonDiseasesSection.style.display = "none";
+        cards.forEach(card => {
+          const diseaseName = card.getAttribute('data-disease').toLowerCase();
+          if (diseaseName.includes(selectedDisease.toLowerCase())) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+    }
+
+    // Initialize the page to show only common diseases
+    filterDisease("");
+  </script>
+  <div class="navigation-container" style="margin-top: 10px;">
+    <div class="black-box">
+      <a href="javascript:history.back()" style="font-family: 'Comfortaa', serif;"> &#8592; Go to Main Page</a>
+    </div>
+  </div>
+  <div id="backButtonContainer" style="display: none; margin-top: 20px;">
+  <button onclick="filterDisease('')" style="padding: 10px 20px; background: #00796B; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+    &#8592; Back to Common Diseases
+  </button>
+</div>
+</div>
+</body>
+</html>

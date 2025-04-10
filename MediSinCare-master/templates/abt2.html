@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - MediSinCare</title>
+    <style>
+        :root {
+            --primary-dark: #185c54;
+            --primary-light: #e8f5e9;
+            --accent-green: #ede2a7;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --hover-green: #45a049;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --gradient-green: linear-gradient(135deg, var(--primary-dark) 0%, #2d5a40 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--gradient-green);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: var(--primary-light);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            background: linear-gradient(45deg, var(--primary-light), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 40px;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        p {
+            text-align: justify;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: var(--text-light);
+            font-size: 1.1em;
+        }
+
+        .section {
+
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, var(--primary-dark), var(--accent-green));
+            text-align: center;
+            line-height: 300px;
+            color: var(--text-light);
+            font-size: 20px;
+            margin: 30px 0;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .image-placeholder:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .highlight {
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        ul li:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--accent-green);
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.5em;
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            text-align: center;
+            color: var(--accent-green);
+            margin: 40px 0;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+            position: relative;
+        }
+
+        .tagline::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--accent-green);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .section ul li ul {
+            margin-top: 10px;
+        }
+
+        .section ul li ul li {
+            background: rgba(255, 255, 255, 0.03);
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .section ul li ul li:hover {
+            transform: translateX(5px);
+        }
+        
+        .black-box {
+            background-color: #ede2a7; /* Dark background */
+            padding: 10px 15px; /* Padding for better appearance */
+            display: inline-block; /* Ensures proper size */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .black-box a {
+            color: rgb(0, 0, 0); /* Text color */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold; /* Make text bold */
+        }
+
+        .black-box:hover {
+            background-color: #e1d2d2; /* Slightly lighter on hover */
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .tagline {
+                font-size: 1.5em;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kurale&display=swap" rel="stylesheet">
+    </head>
+    <div class="container">
+        <h1 style="font-family: 'Kurale', serif;" >Welcome to MediSinCare</h1>
+        <head>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+        </head>
+        <head>
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Monomakh&display=swap" rel="stylesheet">
+        </head>
+        <p style="font-family: 'Kumbh Sans', serif;" >Welcome to MediSinCare, a healthcare platform dedicated to empowering underprivileged and rural communities with <span class="highlight" style="font-family: 'Monomakh', serif;" >accessible and affordable first-line treatment solutions</span>. At MediSinCare, we bridge the gap between symptom onset and professional care, offering a proactive approach to health and well-being. Our mission is rooted in the belief that everyone, regardless of their financial or geographical limitations, deserves quality healthcare.</p>
+        
+        <!-- <div class="image-placeholder">Rural Healthcare Initiative</div> -->
+        
+        <div class="section">
+            <head>
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Elsie+Swash+Caps:wght@400;900&family=Metal&display=swap" rel="stylesheet">
+                <title>Custom Font Example</title>
+            </head> 
+            <h2 style="font-family: 'Comfortaa', serif; ">Our Vision</h2>
+            <p style="font-family: 'Kumbh Sans', serif;" >We envision a world where healthcare is a right, not a privilege. By leveraging technology, traditional wisdom, and cultural diversity, MediSinCare aspires to make preventive care accessible to all, ensuring that no one is left behind in the journey to good health.</p>
+            <p style="font-family: 'Kumbh Sans', serif;">In fiscal year 2024, the Wholesale Price Index for pharmaceuticals, medicinal, chemical, and botanical products across India was nearly 143, indicating that the prices had increased by about 36 percent from the base year of 2012.</p>
+            <p style="font-family: 'Kumbh Sans', serif;">With all-cause mortality rates higher in rural areas, it is no surprise that mortality related to certain causes are also higher in rural areas. The table below from the NCHS brief compares several cause-specific mortality rates for rural and urban counties.</p>
+            <p style="font-family: 'Kumbh Sans', serif;">That is why we are here to resolve such issues, so collaborate with us.</p>
+        </div>
+
+        <div class="tagline" style="font-family: 'Monomakh', serif;">
+            "Bring Affordable Healthcare to Rural Areas with Remedies and Easy Access"
+        </div>
+        
+        <div class="section">
+            <h2 style="font-family: 'Comfortaa', serif;">What We Do</h2>
+            <ul>
+                <li><span class="highlight" style="font-family: 'Monomakh', serif;">Symptom-Based Disease Prediction:</span> <span style="font-family: 'Kumbh Sans', serif;"> Using an advanced machine learning model trained on over 60+ symptoms, we provide quick and accurate predictions for common health conditions.</span></li>
+                <li><span class="highlight" style="font-family: 'Monomakh', serif;">Personalized Health Solutions:</span> <span style="font-family: 'Kumbh Sans', serif;">Our platform offers tailored health advice, including:</span>
+                    <ul>
+                        <li style="font-family: 'Kumbh Sans', serif;"><i>Diet Plans:</i> Nutritious and regionally appropriate meal recommendations.</li>
+                        <li style="font-family: 'Kumbh Sans', serif;"><i>Home Remedies:</i> Simple, effective remedies rooted in traditional practices.</li>
+                        <li style="font-family: 'Kumbh Sans', serif;"><i>Yoga Routines:</i> Curated yoga exercises to promote holistic well-being.</li>
+                    </ul>
+                </li>
+                <li><span class="highlight" style="font-family: 'Monomakh', serif;">Culturally Integrated Care:</span> <span style="font-family: 'Kumbh Sans', serif;">Combining modern healthcare practices with India's rich heritage of Ayurveda and yoga, we provide information in multiple regional languages, making healthcare accessible and relatable.</span></li>
+            </ul>
+        </div>
+        
+        <!-- <div class="image-placeholder">Community Health Programs</div> -->
+        
+        <div class="section">
+            <h2 style="font-family: 'Comfortaa', serif;">Our Mission</h2>
+            <p style="font-family: 'Kumbh Sans', serif;">Our goal is to empower underserved populations by:</p>
+            <ul>
+                <li style="font-family: 'Kumbh Sans', serif;">Promoting preventive care and timely medical intervention.</li>
+                <li style="font-family: 'Kumbh Sans', serif;">Educating individuals on informed health choices.</li>
+                <li style="font-family: 'Kumbh Sans', serif;">Enhancing healthcare accessibility through an intuitive, user-friendly platform.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 style="font-family: 'Comfortaa', serif;">Why Choose MediSinCare?</h2>
+            <ul>
+                <li><span class="highlight" style="font-family: 'Monomakh', serif;">Affordable and Accessible:&nbsp;</span> <span style="font-family: 'Kumbh Sans', serif;">We provide healthcare solutions tailored for those who may not have access to professional medical care.</span></li>
+                <li><span class="highlight" style="font-family: 'Monomakh', serif;">Holistic Approach:&nbsp;</span> <span style="font-family: 'Kumbh Sans', serif;">By integrating allopathy, Ayurveda, and yoga, we focus on comprehensive well-being.</span></li>
+                <li><span class="highlight" style="font-family: 'Monomakh', serif;">Regional Focus:&nbsp;</span> <span style="font-family: 'Kumbh Sans', serif;">With support for multiple languages and cultural contexts, our platform caters to the diverse needs of India's population.</span></li>
+            </ul>
+        </div>
+
+        <div class="section" >
+            <p style="font-family: 'Kumbh Sans', serif;">Join us in our journey to revolutionize healthcare for those who need it the most. Together, we can build a healthier and more equitable future.</p>
+        </div>
+        <div class="navigation-container">
+            <div class="black-box">
+              <a href="javascript:history.back()" style="font-family: 'Comfortaa', serif;"> &#8592; Go Back</a>
+            </div>
+        </div>
+</body>
+</html>
