@@ -138,7 +138,7 @@ Disease-Prediction/
 ```
 
 ## Contact
-For questions or suggestions, feel free to reach out at mridulchawla20@example.com.
+For questions or suggestions, feel free to reach out at mridulchawla20@example.com,gauraavvv01@gmail.com.
 
 ## License
 This project is licensed under the MIT License.
